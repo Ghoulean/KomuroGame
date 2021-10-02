@@ -36,4 +36,10 @@ func clear():
         v.queue_free()
     for e in _n_lines:
         e.queue_free()
+
+func break_animation(center):
+    for v in _n_vertices:
+        v.break_animation(center)
+    for e in _n_lines:
+        e.break_animation(center)
     

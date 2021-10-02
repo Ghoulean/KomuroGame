@@ -3,11 +3,13 @@ extends Timer
 
 onready var occasional_music = $OccasionalMusic
 
+export var countdown:int
+
 func _ready():
     set_paused(false)
     set_one_shot(false)
-    start(120)
-    set_autostart(true)
+    start(countdown)
+    set_autostart(false)
     connect("timeout", self, "on_tick")
     
 func on_tick():

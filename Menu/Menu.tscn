@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Menu/Menu.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Audio/music2.wav" type="AudioStream" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://Assets/menu2.png" type="Texture" id=4]
 [ext_resource path="res://Assets/MenuTitle.png" type="Texture" id=5]
 [ext_resource path="res://Menu/ClickToContinue.gd" type="Script" id=6]
+[ext_resource path="res://Assets/Font/NotoSerifJPBlack.tres" type="DynamicFont" id=7]
+[ext_resource path="res://Assets/menu_demo.png" type="Texture" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1920, 1280 )
@@ -27,6 +29,7 @@ __meta__ = {
 }
 
 [node name="TextureRect2" type="TextureRect" parent="CanvasLayer"]
+visible = false
 margin_left = 900.0
 margin_top = 50.0
 margin_right = 1039.0
@@ -38,6 +41,7 @@ __meta__ = {
 }
 
 [node name="TextureRect3" type="TextureRect" parent="CanvasLayer"]
+visible = false
 margin_left = 900.0
 margin_top = 400.0
 margin_right = 1039.0
@@ -48,16 +52,58 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label" type="Label" parent="CanvasLayer"]
+margin_top = 568.0
+margin_right = 1078.0
+margin_bottom = 717.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0.588235, 0.588235, 0.588235, 1 )
+text = "Click to Continue"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="CanvasLayer"]
+margin_top = 227.042
+margin_right = 1078.0
+margin_bottom = 376.042
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0.588235, 0.588235, 0.588235, 1 )
+text = "Click Edge to Flip"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect4" type="TextureRect" parent="CanvasLayer"]
+margin_left = 109.316
+margin_top = 381.767
+margin_right = 2299.32
+margin_bottom = 839.767
+rect_scale = Vector2( 0.4, 0.4 )
+mouse_filter = 2
+texture = ExtResource( 8 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ClickToContinue" type="Area2D" parent="."]
+visible = false
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickToContinue"]
+position = Vector2( 0, -1.68182 )
+shape = SubResource( 1 )
+
 [node name="OccasionalMusicTimer" type="Timer" parent="."]
 autostart = true
 script = ExtResource( 3 )
+countdown = 5
 
 [node name="OccasionalMusic" type="AudioStreamPlayer" parent="OccasionalMusicTimer"]
 stream = ExtResource( 2 )
 autoplay = true
-
-[node name="ClickToContinue" type="Area2D" parent="."]
-script = ExtResource( 6 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickToContinue"]
-shape = SubResource( 1 )

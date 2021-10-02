@@ -4,6 +4,7 @@ extends Area2D
 var _main_scene
 
 func init(main):
+    visible = true
     _main_scene = main
 
 func _input_event(viewport, event, shape_idx):

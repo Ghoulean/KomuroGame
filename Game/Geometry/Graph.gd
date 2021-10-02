@@ -277,7 +277,9 @@ func _common_vertex(v1, v2):
     return commons
 
 func probably_reroll():
-    return _get_eccentricities().max() > 0.8
+    if _vertices.size() > 20:
+        return false
+    return _get_eccentricities().max() > 0.7
 
 func _get_eccentricities():
     var e = []

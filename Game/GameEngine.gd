@@ -19,17 +19,19 @@ func init():
     set_up_new_level()
 
 func set_up_new_level():
-    _goal_graph.generate_random_points(_get_vertices())
-    _goal_graph.BowyerWatson()
-    if _goal_graph.probably_reroll():
-        set_up_new_level()
-        return
-    _graph.copy(_goal_graph)
-    _graph.AndrewFornet()
-    if _is_game_end():
-        set_up_new_level()
-        return
-    print("next level")
+    var valid = false
+    while !valid:
+        valid = true
+        _goal_graph.generate_random_points(_get_vertices())
+        _graph.copy(_goal_graph)
+        _graph.BowyerWatson()
+        if _graph.probably_reroll():
+            valid = false
+            continue
+        _goal_graph.AndrewFornet()
+        if _is_game_end():
+            valid = false
+            continue
     _level += 1
     emit_signal("new_level")
 
@@ -40,13 +42,13 @@ func get_goal():
     return _goal_graph
 
 func _get_vertices():
-    if _level <= 3:
+    if _level <= 5:
         return 4
-    if _level <= 10:
+    if _level <= 20:
         return 5
-    if _level <= 25:
-        return 7
     if _level <= 50:
+        return 7
+    if _level <= 80:
         return 11
     return 14
 
@@ -73,3 +75,6 @@ func _is_game_end():
 func _try_move_on():
     if _is_game_end():
         set_up_new_level()
+
+func _new_level_delay():
+    set_up_new_level()

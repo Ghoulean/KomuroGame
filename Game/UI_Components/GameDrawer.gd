@@ -31,6 +31,9 @@ func init(graph, goal):
         game_vertex.init(graph, v)
         _n_vertices.append(game_vertex)
 
-func _process(_delta):
-    if _graph:
-        update()
+func clear():
+    for v in _n_vertices:
+        v.queue_free()
+    for e in _n_lines:
+        e.queue_free()
+    

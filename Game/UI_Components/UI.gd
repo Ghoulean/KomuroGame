@@ -7,8 +7,9 @@ onready var _game_canvas = $Game
 onready var _hud_canvas = $HUD
 
 onready var _drawer = $Game/Drawer
-onready var _drawer2 = $Game/Drawer2
 onready var _gamedrawer = $Game/GameDrawer
+
+onready var _score_label = $HUD/ScoreLabel
 
 onready var _windows_size = OS.get_window_size()
 # min margin from any one side
@@ -17,9 +18,9 @@ onready var margins = 1
 func init(game_engine):
     _game_engine = game_engine
     update_canvas()
-    _drawer.init(game_engine.get_graph(), Color(1.0, 1.0, 0))
-    _drawer2.init(game_engine.get_goal(), Color(0, 0, 1.0))
+    _drawer.init(game_engine.get_goal(), Color(1.0, 1.0, 0))
     _gamedrawer.init(game_engine.get_graph(), game_engine.get_goal())
+    _game_engine.connect("new_level", self, "_load_new_level")
 
 func update_canvas():
     var bounds = _game_engine.get_graph().get_bounds().grow(margins)
@@ -28,3 +29,11 @@ func update_canvas():
     _game_canvas.set_scale(Vector2(1, 1) * zoom)
     var offset = (_windows_size / 2)
     _game_canvas.set_offset(offset)
+    
+func _load_new_level():
+    _gamedrawer.clear()
+    update_canvas()
+    _drawer.init(_game_engine.get_goal(), Color(1.0, 1.0, 0))
+    _drawer.update()
+    _gamedrawer.init(_game_engine.get_graph(), _game_engine.get_goal())
+    _score_label.update_text(_game_engine.get_level())

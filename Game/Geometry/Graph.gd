@@ -14,6 +14,8 @@ var _bounds
 
 var SCALE = 100
 
+signal flip_edge
+
 func _init():
     _rng = RandomNumberGenerator.new()
     _rng.randomize()
@@ -45,7 +47,7 @@ func copy(other):
 func generate_random_points(n):
     assert(n >= 3)
     _vertices = []
-    for i in range(n):
+    for _i in range(n):
         _vertices.append(SCALE * Vector2(_rng.randf(), _rng.randf()))
     _calculate_bounds()
     for i in range(len(_vertices)):
@@ -95,7 +97,7 @@ func _generate_convex_hull():
                     vmin = v_i
             _set_edge(v1, v2)
             _triangles.append(Triangle.new(v1, v2, vmin))
-            print(v1, v2, v3, vmin)
+            # print(v1, v2, v3, vmin)
     return _convex_hull
 
 # Warning: may leave graph in inconsistent state
@@ -208,25 +210,19 @@ func _recalculate_edges():
 # unattach v1-v2 and add v3-v4
 func flip_edge(v1, v2):
     if !is_edge(v1, v2):
-        print("fail: not an edge")
         return false
     var commons = _common_vertex(v1, v2)
     if commons.size() < 2:
-        print("fail: can't find enough commons")
         return false
     assert(commons.size() == 2)
     # test if quadrilateral is convex; abort otherwise
     if Triangle.new(v1, v2, commons[0]).is_inside_triangle(commons[1]):
-        print("fail: not quadrilateral")
         return false
     if Triangle.new(v1, v2, commons[1]).is_inside_triangle(commons[0]):
-        print("fail: not quadrilateral")
         return false
     if Triangle.new(v1, commons[0], commons[1]).is_inside_triangle(v2):
-        print("fail: not quadrilateral")
         return false
     if Triangle.new(v2, commons[0], commons[1]).is_inside_triangle(v1):
-        print("fail: not quadrilateral")
         return false 
     var change_triangles = _get_triangle([v1, v2])
     var new_triangles = [Triangle.new(v1, commons[0], commons[1]), Triangle.new(v2, commons[0], commons[1])]
@@ -235,12 +231,13 @@ func flip_edge(v1, v2):
     for t in change_triangles:
         for i in range(_triangles.size()):
             if _triangles[i].equals(t):
-                print("removing ", _triangles[i])
+                # print("removing ", _triangles[i])
                 _triangles.remove(i)
                 break
     _triangles.append_array(new_triangles)
-    print("flipped: ", v1, v2, " with ", commons[0], commons[1])
-    print("added ", new_triangles)
+#    print("flipped: ", v1, v2, " with ", commons[0], commons[1])
+#    print("added ", new_triangles)
+    emit_signal("flip_edge")
     return commons
 
 func _get_triangle(vs):
@@ -278,6 +275,16 @@ func _common_vertex(v1, v2):
                 common = t.c
             commons.append(common)
     return commons
+
+func probably_reroll():
+    return _get_eccentricities().max() > 0.8
+
+func _get_eccentricities():
+    var e = []
+    for t in _triangles:
+        var angles = t.get_angles()
+        e.append((angles.max() - angles.min()) / (angles.max() + angles.min()))
+    return e
 
 func equals(graph):
     var other_vertices = graph.get_vertices()

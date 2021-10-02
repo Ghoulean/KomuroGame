@@ -60,6 +60,17 @@ func has_vertex(v):
 func get_vertices():
     return vertices
 
+func get_angles():
+    return [_calc_angle(a, b, c), _calc_angle(b, a, c), _calc_angle(c, a, b)]
+
+func _calc_angle(v, r1, r2):
+    var v1 = r1 - v
+    var v2 = r2 - v
+    var angle = abs(v1.angle() - v2.angle())
+    if angle > PI:
+        return 2 * PI - angle
+    return angle
+
 func equals(other):
     return other.a == a && other.b == b && other.c == c
 

@@ -17,7 +17,4 @@ func _draw():
             if _graph.is_edge(v, v2):
                 draw_line(v, v2, _color, 1)
         # draw_circle(Vector2(0, 0), 1, Color(0.0, 1.0, 0.0))
-    
-func _process(_delta):
-    if _graph:
-        update()
+

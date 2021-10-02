@@ -27,6 +27,7 @@ func set_up_new_level():
         return
     _level += 1
     emit_signal("new_level")
+    print(_graph.get_triangles().size())
 
 func get_graph():
     return _graph

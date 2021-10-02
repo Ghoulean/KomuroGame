@@ -116,21 +116,6 @@ func is_edge(v1, v2):
         return false
     return _edges[v1][v2]
 
-func randomize_edges():
-    assert(_vertices != null)
-    assert(_vertices.size() >= 3)
-    assert(_triangles != null)
-    assert(_triangles.size() > 0)
-    var flips = _vertices.size() * 0
-    while flips > 0:
-        var j = _rng.randi() % _vertices.size()
-        var random_v = _vertices[j]
-        var adj = _get_adjacent(random_v)
-        j = _rng.randi() % adj.size()
-        var random_v2 = adj[j]
-        if flip_edge(random_v, random_v2):
-            flips -= 1
-
 # Delaunay triangulation algorithm
 func BowyerWatson():
     var triangulation = []
@@ -223,39 +208,50 @@ func _recalculate_edges():
 # unattach v1-v2 and add v3-v4
 func flip_edge(v1, v2):
     if !is_edge(v1, v2):
+        print("fail: not an edge")
         return false
     var commons = _common_vertex(v1, v2)
     if commons.size() < 2:
+        print("fail: can't find enough commons")
         return false
     assert(commons.size() == 2)
     # test if quadrilateral is convex; abort otherwise
     if Triangle.new(v1, v2, commons[0]).is_inside_triangle(commons[1]):
+        print("fail: not quadrilateral")
         return false
     if Triangle.new(v1, v2, commons[1]).is_inside_triangle(commons[0]):
+        print("fail: not quadrilateral")
         return false
     if Triangle.new(v1, commons[0], commons[1]).is_inside_triangle(v2):
+        print("fail: not quadrilateral")
         return false
     if Triangle.new(v2, commons[0], commons[1]).is_inside_triangle(v1):
+        print("fail: not quadrilateral")
         return false 
-    var change_triangles = get_triangle([v1, v2])
+    var change_triangles = _get_triangle([v1, v2])
     var new_triangles = [Triangle.new(v1, commons[0], commons[1]), Triangle.new(v2, commons[0], commons[1])]
     _unset_edge(v1, v2)
     _set_edge(commons[0], commons[1])
     for t in change_triangles:
         for i in range(_triangles.size()):
             if _triangles[i].equals(t):
+                print("removing ", _triangles[i])
                 _triangles.remove(i)
                 break
     _triangles.append_array(new_triangles)
-    return true
-    # print("flipped: ", v1, v2, " with ", commons[0], commons[1])
+    print("flipped: ", v1, v2, " with ", commons[0], commons[1])
+    print("added ", new_triangles)
+    return commons
 
-func get_triangle(vs):
+func _get_triangle(vs):
     var tris = []
     for t in _triangles:
+        var valid = true
         for v in vs:
             if !t.has_vertex(v):
-                continue
+                valid = false
+                break
+        if valid:
             tris.append(t)
     return tris
 

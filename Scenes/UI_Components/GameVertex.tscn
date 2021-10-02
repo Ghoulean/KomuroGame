@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=2]
-
-[ext_resource path="res://Assets/VertexTexture.png" type="Texture" id=1]
-[ext_resource path="res://Game/UI_Components/GameVertex.gd" type="Script" id=2]
-
-[node name="GameVertex" type="Sprite"]
-scale = Vector2( 0.01, 0.01 )
-texture = ExtResource( 1 )
-script = ExtResource( 2 )

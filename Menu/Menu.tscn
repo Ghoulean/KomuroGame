@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Menu/Menu.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Audio/music2.wav" type="AudioStream" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://Assets/MenuTitle.png" type="Texture" id=5]
 [ext_resource path="res://Menu/ClickToContinue.gd" type="Script" id=6]
 [ext_resource path="res://Assets/Font/NotoSerifJPBlack.tres" type="DynamicFont" id=7]
-[ext_resource path="res://Assets/menu_demo.png" type="Texture" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1920, 1280 )
@@ -58,7 +57,7 @@ margin_right = 1078.0
 margin_bottom = 717.0
 custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 0.588235, 0.588235, 0.588235, 1 )
-text = "Click to Continue"
+text = "(Click to Continue)"
 align = 1
 valign = 1
 __meta__ = {
@@ -71,22 +70,27 @@ margin_right = 1078.0
 margin_bottom = 376.042
 custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 0.588235, 0.588235, 0.588235, 1 )
-text = "Click Edge to Flip"
+text = "How to play:
+
+"
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect4" type="TextureRect" parent="CanvasLayer"]
-margin_left = 109.316
-margin_top = 381.767
-margin_right = 2299.32
-margin_bottom = 839.767
-rect_scale = Vector2( 0.4, 0.4 )
-mouse_filter = 2
-texture = ExtResource( 8 )
-stretch_mode = 1
+[node name="Label2" type="Label" parent="CanvasLayer/Label2"]
+margin_left = 129.498
+margin_top = 71.6365
+margin_right = 1207.5
+margin_bottom = 287.636
+rect_scale = Vector2( 0.5, 0.5 )
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0.588235, 0.588235, 0.588235, 1 )
+text = " Click on white edges to flip
+ Edges are flipped according to the triangles they form
+ Match edges to colors"
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

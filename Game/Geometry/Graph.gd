@@ -39,11 +39,6 @@ func copy(other):
         _set_edge(e[2][0], e[2][1])
     _calculate_bounds()
     
-
-# Generate in pre-determined tile
-# Tiles in pseudo-spiral pattern with padding
-# e.g. (0, 0), (0, 2), (2, 2), (2, 0), (4, 0), 
-#      (4, 2), (4, 4), (2, 4), (0, 4), (0, 6)...
 func generate_random_points(n):
     assert(n >= 3)
     _vertices = []
@@ -52,14 +47,20 @@ func generate_random_points(n):
     _calculate_bounds()
     for i in range(len(_vertices)):
         _vertices[i] -= (_bounds.position + _bounds.size / 2)
-    _edges = {}
-    for v in _vertices:
-        _edges[v] = {}
-        for v2 in _vertices:
-            _edges[v][v2] = false
+    _clear_edges()
     _triangles = []
     _calculate_bounds()
 
+func set_points(v):
+    assert(v.size() >= 3)
+    _vertices = v
+    _calculate_bounds()
+    for i in range(len(_vertices)):
+        _vertices[i] -= (_bounds.position + _bounds.size / 2)
+    _calculate_bounds()
+    _clear_edges()
+    _triangles = []
+    
 func _calculate_bounds():
     _bounds = Rect2(_vertices[0], Vector2(0, 0))
     for v in _vertices:

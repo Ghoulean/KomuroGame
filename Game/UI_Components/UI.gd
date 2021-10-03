@@ -19,10 +19,12 @@ onready var _windows_size = get_viewport().size
 # min margin from any one side
 onready var margins = 1
 
+const DRAW_COLOR = Color(0.2, 0.2, 0.2)
+
 func init(game_engine):
     _game_engine = game_engine
     update_canvas()
-    _drawer.init(game_engine.get_goal(), Color(1.0, 1.0, 0))
+    _drawer.init(game_engine.get_goal(), DRAW_COLOR)
     _gamedrawer.init(game_engine.get_graph(), game_engine.get_goal())
     _game_engine.connect("new_level", self, "_load_new_level")
     _game_engine.get_graph().connect("flip_edge", click_sfx, "play_click")
@@ -49,7 +51,7 @@ func _load_new_level():
     
     _gamedrawer.clear()
     update_canvas()
-    _drawer.init(_game_engine.get_goal(), Color(1.0, 1.0, 0))
+    _drawer.init(_game_engine.get_goal(), DRAW_COLOR)
     _drawer.update()
     _gamedrawer.init(_game_engine.get_graph(), _game_engine.get_goal())
     _score_label.update_text(_game_engine.get_level())

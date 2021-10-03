@@ -1,7 +1,6 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Game/GameplayRoot.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Audio/music.wav" type="AudioStream" id=2]
 [ext_resource path="res://Game/UI_Components/TimerLabel.gd" type="Script" id=3]
 [ext_resource path="res://Game/GameEngine.gd" type="Script" id=4]
 [ext_resource path="res://Game/UI_Components/ScoreLabel.gd" type="Script" id=5]
@@ -61,10 +60,6 @@ script = ExtResource( 8 )
 stream = ExtResource( 10 )
 volume_db = -0.3
 script = ExtResource( 11 )
-
-[node name="LoopMusic" type="AudioStreamPlayer" parent="UI/Audio"]
-stream = ExtResource( 2 )
-autoplay = true
 
 [node name="LevelWinSFX" type="AudioStreamPlayer" parent="UI/Audio"]
 stream = ExtResource( 12 )

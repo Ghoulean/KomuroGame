@@ -1,8 +1,6 @@
 extends Node
 # GameEngine.gd
 
-var _rng
-
 var _graph
 var _goal_graph
 
@@ -24,7 +22,10 @@ func set_up_new_level():
     while !valid:
         tries -= 1
         valid = true
-        _goal_graph.generate_random_points(_get_vertices())
+        if (get_level_points(_level)):
+            _goal_graph.set_points(get_level_points(_level))
+        else:
+            _goal_graph.generate_random_points(_get_vertices())
         _graph.copy(_goal_graph)
         _graph.BowyerWatson()
         if _graph.probably_reroll() && tries > 0:
@@ -48,11 +49,13 @@ func _get_vertices():
         return 4
     if _level <= 20:
         return 5
-    if _level <= 50:
-        return 7
+    if _level <= 40:
+        return 6
     if _level <= 80:
-        return 11
-    return 14
+        return 7
+    if _level <= 150:
+        return 8
+    return 9
 
 func get_level():
     return _level
@@ -80,3 +83,14 @@ func _try_move_on():
 
 func _new_level_delay():
     set_up_new_level()
+
+func get_level_points(n):
+    if n == 1:
+        return [Vector2(-28.848076, 26.820595), Vector2(-5.316879, 41.932343), Vector2(-2.045246, -41.932343), Vector2(28.848076, 3.176441)]
+    elif n == 2:
+        return [Vector2(-31.862904, -7.413593), Vector2(-17.359493, -37.59026), Vector2(16.585869, 37.59026), Vector2(31.8629, 14.832172)]
+    elif n == 6:
+        return [Vector2(-20.895287, 40.254211), Vector2(-5.525604, -23.694288), Vector2(-0.378044, 38.726418), Vector2(12.514565, -40.254211), Vector2(20.895279, -6.855808)]
+    elif n == 7:
+        return [Vector2(-33.034382, 39.860111), Vector2(-23.973259, -25.277576), Vector2(-17.33366, -45.285458), Vector2(9.53828, -26.276035), Vector2(33.034386, 45.285458)]
+    return null

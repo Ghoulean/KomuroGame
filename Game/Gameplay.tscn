@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Game/GameplayRoot.gd" type="Script" id=1]
+[ext_resource path="res://Game/UI_Components/Button.gd" type="Script" id=2]
 [ext_resource path="res://Game/UI_Components/TimerLabel.gd" type="Script" id=3]
 [ext_resource path="res://Game/GameEngine.gd" type="Script" id=4]
 [ext_resource path="res://Game/UI_Components/ScoreLabel.gd" type="Script" id=5]
@@ -45,6 +46,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Button" type="Button" parent="UI/HUD"]
+margin_left = 755.124
+margin_top = 640.763
+margin_right = 1077.12
+margin_bottom = 716.763
+custom_fonts/font = ExtResource( 9 )
+custom_colors/font_color = Color( 0.313726, 0.313726, 0.313726, 1 )
+text = "New Level"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Game" type="CanvasLayer" parent="UI"]
 
 [node name="Drawer" type="Node2D" parent="UI/Game"]
@@ -64,3 +78,5 @@ script = ExtResource( 11 )
 [node name="LevelWinSFX" type="AudioStreamPlayer" parent="UI/Audio"]
 stream = ExtResource( 12 )
 pitch_scale = 3.0
+
+[connection signal="button_up" from="UI/HUD/Button" to="UI/HUD/Button" method="_on_Button_button_up"]

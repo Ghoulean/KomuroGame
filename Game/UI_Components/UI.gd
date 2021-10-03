@@ -15,6 +15,8 @@ onready var _timer_label = $HUD/TimerLabel
 onready var click_sfx = $Audio/ClickSFX
 onready var level_win_sfx = $Audio/LevelWinSFX
 
+onready var button = $HUD/Button
+
 onready var _windows_size = get_viewport().size
 # min margin from any one side
 onready var margins = 1
@@ -28,6 +30,7 @@ func init(game_engine):
     _gamedrawer.init(game_engine.get_graph(), game_engine.get_goal())
     _game_engine.connect("new_level", self, "_load_new_level")
     _game_engine.get_graph().connect("flip_edge", click_sfx, "play_click")
+    button.init(game_engine)
 
 func update_canvas():
     var bounds = _game_engine.get_graph().get_bounds().grow(margins)

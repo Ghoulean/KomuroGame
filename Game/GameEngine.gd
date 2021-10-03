@@ -17,12 +17,19 @@ func init():
     set_up_new_level()
 
 func set_up_new_level():
+    _level += 1
+    _set_up_graphs(true)
+
+func reroll_level():
+    _set_up_graphs(false)
+    
+func _set_up_graphs(preset):
     var valid = false
     var tries = 10
     while !valid:
         tries -= 1
         valid = true
-        if (get_level_points(_level)):
+        if (preset && get_level_points(_level)):
             _goal_graph.set_points(get_level_points(_level))
         else:
             _goal_graph.generate_random_points(_get_vertices())
@@ -35,8 +42,8 @@ func set_up_new_level():
         if _is_game_end():
             valid = false
             continue
-    _level += 1
     emit_signal("new_level")
+    
 
 func get_graph():
     return _graph

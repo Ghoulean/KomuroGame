@@ -28,6 +28,9 @@ _global_script_class_icons={
 
 config/name="Komuro"
 run/main_scene="res://Main.tscn"
+boot_splash/image="res://Assets/menu2.png"
+boot_splash/fullsize=false
+boot_splash/use_filter=false
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://Assets/icon.png"
 

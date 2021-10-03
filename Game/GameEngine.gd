@@ -20,12 +20,14 @@ func init():
 
 func set_up_new_level():
     var valid = false
+    var tries = 10
     while !valid:
+        tries -= 1
         valid = true
         _goal_graph.generate_random_points(_get_vertices())
         _graph.copy(_goal_graph)
         _graph.BowyerWatson()
-        if _graph.probably_reroll():
+        if _graph.probably_reroll() && tries > 0:
             valid = false
             continue
         _goal_graph.AndrewFornet()
